@@ -4,9 +4,3 @@ they wish to use.
 
 Formatter Settings was written and is maintained by Stuart Clark (deciphered).
 - http://stuar.tc/lark
-
-
-Todo
---------------------------------------------------------------------------------
-
-* Respect permissions.

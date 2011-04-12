@@ -17,5 +17,7 @@ function admin_admin_select_init($admin) {
  * Implements hook_admin_select_module().
  */
 function admin_admin_select_module() {
-  return array('admin' => t('Admin module'));
+  if (user_access('use admin toolbar')) {
+    return array('admin' => t('Admin module'));
+  }
 }
