@@ -14,27 +14,33 @@ foreach (module_list() as $module) {
 }
 
 /**
- * Imeplements hook_user().
+ * Implements hook_form_user_profile_form_alter().
  */
-function admin_select_user($op, &$edit, &$account, $category = NUL) {
-  if ($op == 'form' && $category == 'account') {
+function admin_select_form_user_profile_form_alter(&$form, &$form_state) {
+  if ($form['#user_category'] == 'account') {
     $admin_modules = module_invoke_all('admin_select_module');
     if (count($admin_modules) > 1) {
-      $data = unserialize($edit['data']);
-      $form = array();
-
       $form['admin_select'] = array(
         '#type' => 'fieldset',
         '#title' => t('Admin Select settings'),
         '#collapsible' => TRUE,
+        '#weight' => 2,
       );
       $form['admin_select']['admin_select'] = array(
         '#type' => 'select',
         '#options' => $admin_modules,
-        '#default_value' => isset($data['admin_select']) ? $data['admin_select'] : current(array_keys($admin_modules)),
+        '#default_value' => isset($form['#user']->data['admin_select']) ? $form['#user']->data['admin_select'] : current(array_keys($admin_modules)),
       );
-
-      return $form;
     }
+  }
+}
+
+
+/**
+ * Implements hook_user_presave().
+ */
+function admin_select_user_presave(&$edit, $account, $category) {
+  if (isset($edit['admin_select'])) {
+    $edit['data']['admin_select'] = $edit['admin_select'];
   }
 }

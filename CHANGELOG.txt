@@ -1,4 +1,4 @@
-Formatter Settings 6.x-1.x-dev (xxxx-xx-xx)
+Administration Menu select 7.x-1.0 (2012-04-12)
 --------------------------------------------------------------------------------
 
 - Initial release.
