@@ -1,0 +1,5 @@
+core = "6.x"
+description = "Allows users to choose which Administration menu module to use."
+name = "Admin Select"
+dependencies[] = 'admin'
+dependencies[] = 'admin_menu'
