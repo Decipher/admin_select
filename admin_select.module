@@ -5,19 +5,11 @@
  */
 
 /**
- * Implements hook_init().
+ * Include additional files.
  */
-function admin_select_init() {
-  global $user;
-  $data = unserialize($user->data);
-  $data['admin_select'] = isset($data['admin_select']) ? $data['admin_select'] : 'admin';
-  switch($data['admin_select']) {
-    case 'admin':
-      admin_menu_suppress();
-      break;
-    case 'admin_menu':
-      admin_suppress();
-      break;
+foreach (module_list() as $module) {
+  if (file_exists($file = dirname(__FILE__) . "/includes/{$module}.inc")) {
+    require_once $file;
   }
 }
 
@@ -26,23 +18,23 @@ function admin_select_init() {
  */
 function admin_select_user($op, &$edit, &$account, $category = NUL) {
   if ($op == 'form' && $category == 'account') {
-    $data = unserialize($edit['data']);
-    $form = array();
+    $admin_modules = module_invoke_all('admin_select_module');
+    if (count($admin_modules) > 1) {
+      $data = unserialize($edit['data']);
+      $form = array();
 
-    $form['admin_select'] = array(
-      '#type' => 'fieldset',
-      '#title' => t('Admin Select settings'),
-      '#collapsible' => TRUE,
-    );
-    $form['admin_select']['admin_select'] = array(
-      '#type' => 'select',
-      '#options' => array(
-        'admin' => t('Admin module'),
-        'admin_menu' => t('Admin Menu module'),
-       ),
-      '#default_value' => isset($data['admin_select']) ? $data['admin_select'] : 'admin',
-    );
+      $form['admin_select'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Admin Select settings'),
+        '#collapsible' => TRUE,
+      );
+      $form['admin_select']['admin_select'] = array(
+        '#type' => 'select',
+        '#options' => $admin_modules,
+        '#default_value' => isset($data['admin_select']) ? $data['admin_select'] : current(array_keys($admin_modules)),
+      );
 
-    return $form;
+      return $form;
+    }
   }
 }
