@@ -54,7 +54,7 @@ function admin_select_form_user_profile_form_alter(&$form, &$form_state) {
     asort($options);
     $form['admin_select'] = array(
       '#type' => 'fieldset',
-      '#title' => t('Administration Select menu settings'),
+      '#title' => t('Administration Menu select settings'),
       '#collapsible' => TRUE,
       '#weight' => 10,
       '#access' => !empty($options),
@@ -82,7 +82,7 @@ function admin_select_user_presave(&$edit, $account, $category) {
 function admin_select_field_extra_fields() {
   $info['user']['user']['form']['admin_select'] = array(
     'label' => 'Admin select',
-    'description' => t('Admin select module account form elements'),
+    'description' => t('Administration Menu select module account form elements'),
     'weight' => 10,
   );
 
