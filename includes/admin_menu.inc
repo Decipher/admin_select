@@ -5,19 +5,16 @@
  */
 
 /**
- * Implements hook_admin_select_init() on behalf of admin_menu.module.
+ * Implements hook_admin_select_info() on behalf of admin_menu.module.
  */
-function admin_menu_admin_select_init($admin) {
-  if ($admin != 'admin_menu') {
-    admin_menu_suppress();
-  }
-}
+function admin_menu_admin_select_info() {
+  $info = array();
 
-/**
- * Implements hook_admin_select_module().
- */
-function admin_menu_admin_select_module() {
-  if (user_access('access administration menu')) {
-    return array('admin_menu' => t('Administration menu module'));
-  }
+  $info['admin_menu'] = array(
+    'title' => t('Administration menu module'),
+    'access arguments' => array('access administration menu'),
+    'suppress callback' => 'admin_menu_suppress',
+  );
+
+  return $info;
 }

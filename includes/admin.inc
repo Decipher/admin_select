@@ -5,19 +5,16 @@
  */
 
 /**
- * Implements hook_admin_select_init() on behalf of admin.module.
+ * Implements hook_admin_select_info() on behalf of admin.module.
  */
-function admin_admin_select_init($admin) {
-  if ($admin != 'admin') {
-    admin_suppress();
-  }
-}
+function admin_admin_select_info() {
+  $info = array();
 
-/**
- * Implements hook_admin_select_module().
- */
-function admin_admin_select_module() {
-  if (user_access('use admin toolbar')) {
-    return array('admin' => t('Admin module'));
-  }
+  $info['admin'] = array(
+    'title' => t('Admin module'),
+    'access arguments' => array('use admin toolbar'),
+    'suppress callback' => 'admin_suppress',
+  );
+
+  return $info;
 }

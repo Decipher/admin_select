@@ -14,27 +14,58 @@ foreach (module_list() as $module) {
 }
 
 /**
- * Implements hook_form_user_profile_form_alter().
+ * Implements hook_init().
  */
-function admin_select_form_user_profile_form_alter(&$form, &$form_state) {
-  if ($form['#user_category'] == 'account') {
-    $admin_modules = module_invoke_all('admin_select_module');
-    if (count($admin_modules) > 1) {
-      $form['admin_select'] = array(
-        '#type' => 'fieldset',
-        '#title' => t('Admin Select settings'),
-        '#collapsible' => TRUE,
-        '#weight' => 2,
-      );
-      $form['admin_select']['admin_select'] = array(
-        '#type' => 'select',
-        '#options' => $admin_modules,
-        '#default_value' => isset($form['#user']->data['admin_select']) ? $form['#user']->data['admin_select'] : current(array_keys($admin_modules)),
-      );
+function admin_select_init() {
+  if (isset($GLOBALS['user']->data['admin_select'])) {
+    $current = $GLOBALS['user']->data['admin_select'];
+    $info = admin_select_get_admin_select_info();
+    foreach ($info as $key => $item) {
+      if ($key != $current) {
+        admin_select_suppress($item);
+      }
     }
   }
 }
 
+function admin_select_get_admin_select_info($check_access = TRUE) {
+  $info = module_invoke_all('admin_select_info');
+  drupal_alter('admin_select_info', $info);
+
+  if ($check_access) {
+    $info = array_map('_admin_select_check_access', $info);
+  }
+
+  return $info;
+}
+
+/**
+ * Implements hook_form_user_profile_form_alter().
+ */
+function admin_select_form_user_profile_form_alter(&$form, &$form_state) {
+  if ($form['#user_category'] == 'account') {
+    $info = admin_select_get_admin_select_info();
+    $options = array();
+    foreach ($info as $key => $item) {
+      if (!empty($item['access'])) {
+        $options[$key] = $item['title'];
+      }
+    }
+    asort($options);
+    $form['admin_select'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Administration Select menu settings'),
+      '#collapsible' => TRUE,
+      '#weight' => 10,
+      '#access' => !empty($options),
+    );
+    $form['admin_select']['admin_select'] = array(
+      '#type' => 'select',
+      '#options' => array('' => t('None')) + $options,
+      '#default_value' => isset($form['#user']->data['admin_select']) ? $form['#user']->data['admin_select'] : '',
+    );
+  }
+}
 
 /**
  * Implements hook_user_presave().
@@ -43,4 +74,57 @@ function admin_select_user_presave(&$edit, $account, $category) {
   if (isset($edit['admin_select'])) {
     $edit['data']['admin_select'] = $edit['admin_select'];
   }
+}
+
+/**
+ * Implements hook_field_extra_fields().
+ */
+function admin_select_field_extra_fields() {
+  $info['user']['user']['form']['admin_select'] = array(
+    'label' => 'Admin select',
+    'description' => t('Admin select module account form elements'),
+    'weight' => 10,
+  );
+
+  return $info;
+}
+
+/**
+ * Suppress and admin item.
+ */
+function admin_select_suppress($item) {
+  if (!empty($item['include'])) {
+    include_once $item['include'];
+  }
+
+  if (!empty($item['suppress callback']) && function_exists($item['suppress callback'])) {
+    $item['suppress callback']();
+  }
+}
+
+/**
+ * Check to see if the current user has access to an admin item.
+ */
+function _admin_select_check_access(&$item) {
+  // Determine access callback, which will decide whether or not the current
+  // user has access to this path.
+  $item += array('access callback' => 'user_access');
+  $callback = empty($item['access callback']) ? FALSE : trim($item['access callback']);
+  // Check for a TRUE or FALSE value.
+  if (is_bool($callback)) {
+    $item['access'] = $callback;
+  }
+  else {
+    $arguments = isset($item['access arguments']) ? $item['access arguments'] : array();
+    // As call_user_func_array is quite slow and user_access is a very common
+    // callback, it is worth making a special case for it.
+    if ($callback == 'user_access') {
+      $item['access'] = (count($arguments) == 1) ? user_access($arguments[0]) : user_access($arguments[0], $arguments[1]);
+    }
+    elseif (function_exists($callback)) {
+      $item['access'] = call_user_func_array($callback, $arguments);
+    }
+  }
+
+  return $item;
 }
