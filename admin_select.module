@@ -29,17 +29,6 @@ function admin_select_init() {
   }
 }
 
-function admin_select_get_admin_select_info($check_access = TRUE) {
-  $info = module_invoke_all('admin_select_info');
-  drupal_alter('admin_select_info', $info);
-
-  if ($check_access) {
-    $info = array_map('_admin_select_check_access', $info);
-  }
-
-  return $info;
-}
-
 /**
  * Implements hook_user().
  */
@@ -69,6 +58,20 @@ function admin_select_user($op, &$edit, &$account, $category = NULL) {
     );
     return $form;
   }
+}
+
+/**
+ *
+ */
+function admin_select_get_admin_select_info($check_access = TRUE) {
+  $info = module_invoke_all('admin_select_info');
+  drupal_alter('admin_select_info', $info);
+
+  if ($check_access) {
+    $info = array_map('_admin_select_check_access', $info);
+  }
+
+  return $info;
 }
 
 /**

@@ -12,7 +12,7 @@ if (!function_exists('toolbar_admin_select_info')) {
     $info = array();
 
     $info['toolbar'] = array(
-      'title' => t('Toolbar'),
+      'title' => t('Toolbar module'),
       'access arguments' => array('access toolbar'),
       'suppress callback' => 'toolbar_suppress',
     );
