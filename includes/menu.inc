@@ -30,7 +30,7 @@ function admin_menu() {
   foreach ($info as $key => $item) {
     $items["admin_select/{$key}"] = array(
       'title' => $item['title'],
-      'access callback' => $item['access calback'],
+      'access callback' => $item['access callback'],
       'access arguments' => $item['access arguments'],
       'page callback' => '_admin_select_menu_callback',
       'page arguments' => array($key),

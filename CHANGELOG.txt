@@ -1,4 +1,4 @@
-Administration Menu select 6.x-1.1, xxxx-xx-xx (Development release)
+Administration Menu select 6.x-1.x, xxxx-xx-xx (Development release)
 --------------------------------------------------------------------------------
 
 - Added Admin optimized block.

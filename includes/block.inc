@@ -29,7 +29,6 @@ function admin_select_block($op = 'list', $delta = 0, $edit = array()) {
  * Administration Menu select block.
  */
 function admin_select_block_0_view() {
-  $data = unserialize($GLOBALS['user']->data);
   $info = admin_select_get_admin_select_info();
   $options = array();
   foreach ($info as $key => $item) {
@@ -51,6 +50,7 @@ function admin_select_block_0_view() {
  * Administration Menu select block form.
  */
 function admin_select_block_form(&$form_state, $options) {
+  $data = unserialize($GLOBALS['user']->data);
   $form = array();
   $form['admin_select'] = array(
     '#type' => 'select',
