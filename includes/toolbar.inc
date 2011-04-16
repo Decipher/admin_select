@@ -11,7 +11,7 @@ function toolbar_admin_select_info() {
   $info = array();
 
   $info['toolbar'] = array(
-    'title' => t('Toolbar'),
+    'title' => t('Toolbar module'),
     'access arguments' => array('access toolbar'),
     'suppress callback' => 'admin_select_toolbar_suppress',
   );
