@@ -1,8 +1,12 @@
 Administration Menu select 6.x-1.x, xxxx-xx-xx (Development release)
 --------------------------------------------------------------------------------
 
+- #1301744 by tnanek: Fixed bad namespace issue.
+- #1284818 by phillipz, deciphered: Added Administration Menu select permissions.
+- #1140818: Added ability to set default by role.
 - Added Admin optimized block.
 - Added Admin Menu optimized menu.
+- Fixed Toolbar module permissions.
 
 
 Administration Menu select 6.x-1.1, 2012-04-13

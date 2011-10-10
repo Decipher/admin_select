@@ -7,8 +7,16 @@
 /**
  * Implements hook_menu().
  */
-function admin_menu() {
+function admin_select_menu() {
   $items = array();
+
+  $items['admin/settings/admin_select'] = array(
+    'title' => 'Administration Menu select',
+    'access arguments' => array('administer administration menu select'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('admin_select_defaults'),
+    'type' => MENU_NORMAL_ITEM,
+  );
 
   $items['admin_select'] = array(
     'title' => 'Adminstration Menu select',

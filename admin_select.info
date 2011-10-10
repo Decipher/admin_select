@@ -1,3 +1,4 @@
 core = "6.x"
 description = "Allows users to choose which Administration menu module to use."
 name = "Administration Menu select"
+package = "Administration"
