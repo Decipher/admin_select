@@ -1,4 +1,4 @@
-Administration Menu select 6.x-1.x, xxxx-xx-xx (Development release)
+Administration Menu select 6.x-1.2, 2011-10-12
 --------------------------------------------------------------------------------
 
 - #1301744 by tnanek: Fixed bad namespace issue.
@@ -9,7 +9,7 @@ Administration Menu select 6.x-1.x, xxxx-xx-xx (Development release)
 - Fixed Toolbar module permissions.
 
 
-Administration Menu select 6.x-1.1, 2012-04-13
+Administration Menu select 6.x-1.1, 2011-04-13
 --------------------------------------------------------------------------------
 
 - #1125012 by Dave Reid, deciphered: Added support for Toolbar module.
@@ -17,7 +17,7 @@ Administration Menu select 6.x-1.1, 2012-04-13
 - Added API documentation.
 
 
-Administration Menu select 6.x-1.0, 2012-04-12
+Administration Menu select 6.x-1.0, 2011-04-12
 --------------------------------------------------------------------------------
 
 - Initial release.
