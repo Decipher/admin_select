@@ -17,7 +17,7 @@ foreach (module_list() as $module) {
  * Implements hook_init().
  */
 function admin_select_init() {
-  $current = isset($GLOBALS['user']->data) && isset($GLOBALS['user']->data['admin_select']) ? $GLOBALS['user']->data['admin_select'] : _admin_select_default();;
+  $current = isset($GLOBALS['user']->data) && isset($GLOBALS['user']->data['admin_select']) ? $GLOBALS['user']->data['admin_select'] : _admin_select_default();
   $info = admin_select_get_admin_select_info();
   foreach ($info as $key => $item) {
     if ($key != $current) {
@@ -34,9 +34,9 @@ function _admin_select_default() {
   }
   uasort($settings, "element_sort");
 
-  foreach($settings as $rid => $setting) {
-    if (isset($GLOBALS['user']->roles[$rid]) && (isset($info[$setting['admin_select_default']]) || empty($setting['admin_select_default']))) {
-      return $setting['admin_select_default'];
+  foreach(array_keys($settings) as $rid) {
+    if (isset($GLOBALS['user']->roles[$rid]) && (isset($info[$settings[$rid]['admin_select_default']]) || empty($settings[$rid]['admin_select_default']))) {
+      return $settings[$rid]['admin_select_default'];
     }
   }
 

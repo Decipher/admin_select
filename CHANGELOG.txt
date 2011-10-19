@@ -1,3 +1,9 @@
+Administration Menu select 7.x-1.x, xxxx-xx-xx (Development release)
+--------------------------------------------------------------------------------
+
+- Fixed issue with defaults logic.
+
+
 Administration Menu select 7.x-1.2, 2011-10-12
 --------------------------------------------------------------------------------
 

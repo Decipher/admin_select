@@ -9,5 +9,5 @@ files[] = admin_select.module
 files[] = includes/admin.inc
 files[] = includes/admin_menu.inc
 files[] = includes/block.inc
-files[] = includes/menu.inc
+files[] = includes/system.inc
 files[] = includes/toolbar.inc
