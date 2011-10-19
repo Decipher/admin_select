@@ -142,7 +142,7 @@ function admin_select_form_user_profile_form_alter(&$form, &$form_state) {
     $form['admin_select']['admin_select'] = array(
       '#type' => 'select',
       '#options' => array('' => t('None')) + $options,
-      '#default_value' => isset($form['#user']->data['admin_select']) ? $form['#user']->data['admin_select'] : '',
+      '#default_value' => isset($form['#user']->data['admin_select']) ? $form['#user']->data['admin_select'] : _admin_select_default(),
     );
   }
 }
